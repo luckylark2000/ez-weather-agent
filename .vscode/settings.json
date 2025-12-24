@@ -16,7 +16,7 @@
   },
   "explorer.fileNesting.enabled": true,
   "explorer.fileNesting.patterns": {
-    "pyproject.toml": "uv.lock,.python-version,LICENSE,.markdownlint.json,requirements.txt,.gitignore"
+    "pyproject.toml": "uv.lock,.python-version,LICENSE,.markdownlint.json,requirements.txt,.gitignore,cspell.json"
   },
   "chat.disableAIFeatures": true
 }
