@@ -24,7 +24,7 @@ async def get_realtime_weather(
     lat: float = Field(
         description="The latitude of the location to get the weather for"
     ),
-) -> dict:
+) -> str:
     """Get the realtime weather for a location."""
     try:
         async with httpx.AsyncClient() as client:
@@ -65,7 +65,7 @@ async def get_hourly_forecast(
     lat: float = Field(
         description="The latitude of the location to get the weather for"
     ),
-) -> dict:
+) -> str:
     """Get hourly weather forecast for the next 72 hours."""
     try:
         async with httpx.AsyncClient() as client:
@@ -104,7 +104,7 @@ async def get_weekly_forecast(
     lat: float = Field(
         description="The latitude of the location to get the weather for"
     ),
-) -> dict:
+) -> str:
     """Get daily weather forecast for the next 7 days."""
     try:
         async with httpx.AsyncClient() as client:
@@ -141,7 +141,7 @@ async def get_historical_weather(
     lat: float = Field(
         description="The latitude of the location to get the weather for"
     ),
-) -> dict:
+) -> str:
     """Get historical weather data for the past 24 hours."""
     try:
         # Calculate timestamp for 24 hours ago
@@ -178,7 +178,7 @@ async def get_weather_alerts(
     lat: float = Field(
         description="The latitude of the location to get the weather for"
     ),
-) -> dict:
+) -> str:
     """Get weather alerts for the location."""
     try:
         async with httpx.AsyncClient() as client:

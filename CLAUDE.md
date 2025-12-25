@@ -8,7 +8,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Technology Stack
 
-- **Python**: 3.14+ (specified in `.python-version`)
+- **Python**: 3.11+ (specified in `.python-version`)
 - **Package Manager**: UV (with Tsinghua PyPI mirror)
 - **Key Dependencies**:
   - `langgraph>=1.0.5`: For building the AI agent graph
@@ -25,6 +25,7 @@ The project is structured as follows:
 - **config.py**: Placeholder for configuration loading (comments in Chinese: "一些配置加载")
 
 Currently, most implementation files contain only placeholder comments in Chinese. The architecture is designed to have:
+
 1. An AI agent that handles weather queries (weather_agent.py)
 2. An MCP server that exposes weather capabilities (mcp_weather_server.py)
 3. Configuration management (config.py)
@@ -33,12 +34,15 @@ Currently, most implementation files contain only placeholder comments in Chines
 ## Common Development Commands
 
 ### Running the Application
+
 ```bash
 python main.py
 ```
+
 Requires `OPEN_WEATHER_API_KEY` environment variable to be set.
 
 ### Managing Dependencies
+
 ```bash
 # Install dependencies
 uv sync
@@ -51,6 +55,7 @@ uv update
 ```
 
 ### Setting Up Development Environment
+
 ```bash
 # Create/activate virtual environment (handled by uv)
 uv venv
@@ -62,6 +67,7 @@ uv sync
 ## Environment Setup
 
 Create a `.env` file in the project root with:
+
 ```
 OPEN_WEATHER_API_KEY=<your_api_key_here>
 ```
@@ -71,6 +77,7 @@ The `.env` file is excluded from version control and must be created locally.
 ## Project Status
 
 This is an early-stage project with placeholder implementations. Focus areas for future development:
+
 - Implement the weather agent logic in `weather_agent.py` using LangGraph
 - Implement the MCP server in `mcp_weather_server.py`
 - Complete configuration management in `config.py`

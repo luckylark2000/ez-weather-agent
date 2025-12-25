@@ -2,15 +2,18 @@
   "version": "0.2",
   "language": "en",
   "words": [
+    "caiyun",
+    "dailysteps",
     "DEEPSEEK",
     "dotenv",
+    "fastmcp",
+    "hourlysteps",
+    "httpx",
+    "langgraph",
+    "pydantic",
+    "shenzhen",
     "skycon"
   ],
   "flagWords": [],
-  "ignorePaths": [
-    "node_modules",
-    "dist",
-    "build",
-    ".git"
-  ]
+  "ignorePaths": ["node_modules", "dist", "build", ".git"]
 }

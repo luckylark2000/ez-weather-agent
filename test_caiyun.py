@@ -2,11 +2,19 @@
 """Test script for Caiyun Weather API integration."""
 
 import os
+from io import TextIOWrapper
 import sys
 
-# Set UTF-8 encoding for output
-if sys.stdout.encoding != 'utf-8':
-    sys.stdout.reconfigure(encoding='utf-8', errors='ignore')
+# Set UTF-8 encoding for output on Windows
+if sys.stdout.encoding and sys.stdout.encoding.lower() != 'utf-8':
+    if isinstance(sys.stdout, TextIOWrapper) and hasattr(sys.stdout, 'reconfigure'):
+        sys.stdout.reconfigure(encoding='utf-8', errors='ignore')  # type: ignore
+    else:
+        # Fallback for TextIOWrapper that doesn't have reconfigure
+        try:
+            sys.stdout = TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='ignore')
+        except (AttributeError, TypeError):
+            pass
 
 from weather_agent import run_weather_agent
 

@@ -30,10 +30,10 @@ ez-weather-agent/
 
 ## 技术栈
 
-- **Python**: 3.14+
+- **Python**: 3.11+
 - **LangGraph**: >=1.0.5 - 用于构建 AI 代理
 - **DeepSeek API**: 通过 OpenAI SDK 访问
-- **LangChain Core**: >=0.1.0 - 核心工具和消息类型
+- **LangChain Core**: 核心工具和消息类型
 - **python-dotenv**: >=1.2.1 - 环境变量管理
 
 ## 安装和设置

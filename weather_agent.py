@@ -1,7 +1,7 @@
 """Weather agent powered by DeepSeek and LangGraph with Caiyun Weather API."""
 import json
 import os
-from typing import Annotated
+from typing import Annotated, Any
 
 import httpx
 from langchain_core.messages import BaseMessage, HumanMessage, AIMessage, ToolMessage
@@ -11,6 +11,7 @@ from typing_extensions import TypedDict
 from langgraph.graph import StateGraph, START, END
 from langgraph.graph.message import add_messages
 from openai import OpenAI
+from openai.types.chat import ChatCompletionToolParam
 
 from config import (
     get_deepseek_api_key,
@@ -236,10 +237,10 @@ class AgentState(TypedDict):
 def create_weather_agent():
     """Create and return the weather agent graph."""
 
-    def chatbot_node(state: AgentState):
+    def chatbot_node(state: AgentState) -> dict[str, list[BaseMessage]]:
         """Process messages and call the LLM."""
         # Prepare tools schema for the model
-        tools_schema = [
+        tools_schema: list[ChatCompletionToolParam] = [
             {
                 "type": "function",
                 "function": {
@@ -356,18 +357,27 @@ def create_weather_agent():
 
         # If the model called tools, add tool_calls to the message
         if response_message.tool_calls:
-            ai_message.tool_calls = [
-                {
-                    "id": tc.id,
-                    "name": tc.function.name,
-                    "args": json.loads(tc.function.arguments),
-                }
-                for tc in response_message.tool_calls
-            ]
+            ai_message.tool_calls = []
+            for tc in response_message.tool_calls:
+                # Handle both ChatCompletionMessageToolCall and other types
+                tool_name = getattr(tc, 'function', None)
+                if tool_name:
+                    tool_name = getattr(tool_name, 'name', None)
+
+                tool_args = getattr(tc, 'function', None)
+                if tool_args:
+                    tool_args = getattr(tool_args, 'arguments', None)
+
+                if tool_name and tool_args:
+                    ai_message.tool_calls.append({
+                        "id": tc.id,
+                        "name": tool_name,
+                        "args": json.loads(tool_args),
+                    })
 
         return {"messages": [ai_message]}
 
-    def tool_node(state: AgentState):
+    def tool_node(state: AgentState) -> dict[str, list[BaseMessage]]:
         """Execute tools called by the model."""
         last_message = state["messages"][-1]
 
@@ -446,20 +456,23 @@ def run_weather_agent(query: str) -> str:
     agent = create_weather_agent()
 
     # Prepare initial state with system message
-    messages = [
+    messages: list[BaseMessage] = [
         HumanMessage(
             content=f"You are a helpful weather assistant. Answer the user's weather queries by using the available tools. User query: {query}"
         )
     ]
 
-    state = {"messages": messages}
+    state: AgentState = {"messages": messages}
 
     # Run the agent
     result = agent.invoke(state)
 
     # Extract the final response
     last_message = result["messages"][-1]
+    response_text: str = ""
     if isinstance(last_message, AIMessage):
-        return last_message.content
+        response_text = last_message.content if isinstance(last_message.content, str) else str(last_message.content)
     else:
-        return str(last_message)
+        response_text = str(last_message)
+
+    return response_text

@@ -9,7 +9,7 @@ def main():
     """Main function that runs the weather agent."""
     try:
         # Verify that the API key is configured
-        api_key = get_deepseek_api_key()
+        get_deepseek_api_key()
         model = get_deepseek_model()
 
         print("=" * 60)
