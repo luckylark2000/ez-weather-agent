@@ -51,20 +51,22 @@ The project follows a **ReAct pattern** (Reasoning + Acting) with LangGraph:
 
 Create a `.env` file in the project root with:
 
-```
+```txt
 DEEPSEEK_API_KEY=<your_deepseek_api_key>
 CAIYUN_WEATHER_API_TOKEN=<your_caiyun_api_token>
 ```
 
 Optional variables:
-```
+
+```txt
 DEEPSEEK_BASE_URL=https://api.deepseek.com
 DEEPSEEK_MODEL=deepseek-chat
 ```
 
 Get API keys from:
-- **DeepSeek**: https://api-docs.deepseek.com (register and create API key)
-- **Caiyun Weather**: https://www.caiyunapp.com/ (register, go to developer/API section, create app)
+
+- **DeepSeek**: <https://api-docs.deepseek.com> (register and create API key)
+- **Caiyun Weather**: <https://www.caiyunapp.com/> (register, go to developer/API section, create app)
 
 The `.env` file is excluded from version control and must be created locally.
 
@@ -121,6 +123,7 @@ uv update
 ### Tool Execution
 
 Tools are LangChain `@tool` decorated functions. They:
+
 - Run synchronously but make async HTTP calls to Caiyun API using `asyncio.new_event_loop()`
 - Require location to be in `CITY_COORDINATES` dict (case-insensitive lookup)
 - Return formatted strings for display/context
@@ -129,6 +132,7 @@ Tools are LangChain `@tool` decorated functions. They:
 ### City Coordinates
 
 Located in `weather_agent.py` as `CITY_COORDINATES` dict. To add support for new cities:
+
 1. Add entry: `"city_name": (longitude, latitude)`
 2. Find coordinates via Google Maps or equivalent
 3. Both nodes (agent, MCP server) use the same dict for consistency
@@ -149,6 +153,7 @@ Located in `weather_agent.py` as `CITY_COORDINATES` dict. To add support for new
 ### Adding Support for New Cities
 
 Edit `CITY_COORDINATES` in `weather_agent.py`:
+
 ```python
 CITY_COORDINATES = {
     ...existing entries...

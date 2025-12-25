@@ -2,6 +2,7 @@
   "version": "0.2",
   "language": "en",
   "words": [
+    "asyncio",
     "caiyun",
     "dailysteps",
     "DEEPSEEK",
@@ -14,6 +15,5 @@
     "shenzhen",
     "skycon"
   ],
-  "flagWords": [],
-  "ignorePaths": ["node_modules", "dist", "build", ".git"]
+  "flagWords": []
 }
